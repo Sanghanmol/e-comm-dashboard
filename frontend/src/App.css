@@ -179,8 +179,9 @@
   transform: translateX(-50%);
 }
 .table-list {
-  margin: 30px;
-  overflow: auto;
+  margin: 15px;
+  max-height: 400px;
+  overflow-y: auto; 
 }
 
 
@@ -201,7 +202,7 @@
 
 .search-product-box {
   width: 400px;
-  margin-left: 500px;
+  margin-left: 550px;
   margin-right: auto;
   height: 30px;
   border: 2px solid rgb(24, 61, 76);
