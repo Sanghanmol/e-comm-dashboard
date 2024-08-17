@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 
 const UpdateProduct = () => {
@@ -10,12 +10,8 @@ const UpdateProduct = () => {
     const navigate = useNavigate();
     const params = useParams();
 
-    useEffect(() => {
-        getProductDetails();
-    }, []);
-
-    const getProductDetails = async () => {
-        console.log(params)
+    const getProductDetails = useCallback(async () => {
+        console.log(params);
         let result = await fetch(`http://localhost:4000/product/${params.id}`, {
             headers: {
                 authorization: `bearer ${JSON.parse(localStorage.getItem('token'))}`
@@ -27,7 +23,11 @@ const UpdateProduct = () => {
         setCategory(result.category);
         setCompany(result.company);
         setImage(result.image);
-    };
+    }, [params]);
+
+    useEffect(() => {
+        getProductDetails();
+    }, [getProductDetails]);
 
     const updateProduct = async () => {
         console.log(name, price, category, company, image)

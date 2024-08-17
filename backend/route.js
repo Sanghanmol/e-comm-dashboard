@@ -1,10 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const Jwt = require("jsonwebtoken");
 const users = require("./db/users");
 const Product = require("./db/Product");
 
-// Define your JWT secret key
 const jwtKey = process.env.JWT_SECRET;
 
 router.post("/register", async (req, resp) => {
@@ -24,12 +24,12 @@ router.post("/register", async (req, resp) => {
 });
 
 router.post("/login", async (req, resp) => {
-  console.log(req.body);
   if (req.body.email && req.body.password && req.body.repeatPassword) {
     let user = await users.findOne(req.body, {
       password: 0,
       repeatPassword: 0,
     });
+
     if (user) {
       Jwt.sign({ user }, jwtKey, { expiresIn: "2h" }, (err, token) => {
         if (err) {
